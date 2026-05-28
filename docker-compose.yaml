@@ -141,9 +141,11 @@ services:
     <<: *franka-overlay
 
   iiwa-overlay:
+    profiles: ["iiwa"]
     <<: *iiwa-overlay
 
   kinova-overlay:
+    profiles: ["kinova"]
     <<: *kinova-overlay
 
   launch_zenoh_router:
@@ -179,6 +181,7 @@ services:
       left_robot_ip:=${LEFT_ROBOT_IP:-172.16.1.2} right_robot_ip:=${RIGHT_ROBOT_IP:-172.16.0.2}"
 
   launch_kinova:
+    profiles: ["kinova"]
     <<: *kinova-overlay
     command: >
       bash -c "source /opt/ros/humble/setup.bash &&
@@ -188,6 +191,7 @@ services:
       ros2 launch crisp_controllers_robot_demos kinova_gen3.launch.py"
 
   launch_iiwa:
+    profiles: ["iiwa"]
     <<: *iiwa-overlay
     command: >
       bash -c "source /opt/ros/humble/setup.bash &&
@@ -195,7 +199,6 @@ services:
       export ROS_NETWORK_INTERFACE=${ROS_NETWORK_INTERFACE:-lo} &&
       RMW=${RMW:-} source src/crisp_controllers_demos/scripts/setup_middleware.sh &&
       ros2 launch crisp_controllers_robot_demos iiwa.launch.py"
-
   # -- Camera related services: --
   launch_realsense:
     <<: *realsense-cameras-overlay
